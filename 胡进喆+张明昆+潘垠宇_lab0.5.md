@@ -18,7 +18,7 @@ make debug
 make gdb
 ```
 打开makefile里的源文件，找到debug的target,发现其定义如下：
-```json
+```
  $(UCOREIMG) $(SWAPIMG) $(SFSIMG)
 	$(V)$(QEMU) \
 		-machine virt \
@@ -36,8 +36,7 @@ make gdb
 - `-S`: 告诉 QEMU 在启动时暂停执行，等待用户通过GDB连接。
 
 gdb的target如下：
-```json
- gdb:
+```
 	riscv64-unknown-elf-gdb \
     -ex 'file bin/kernel' \
     -ex 'set arch riscv:rv64' \
@@ -52,7 +51,7 @@ gdb的target如下：
 - `-ex 'target remote localhost:1234'`: 指示GDB连接到运行在本机的1234端口上的远程目标，即我们启动的debug命令
 
 在我们进行make dbg后，得到如下结果：
-![这是图片](1.jpg "Magic Gardens")
+![这是图片](lab0.5.jpg "Magic Gardens")
 
 在RISC-V体系结构中，系统加电自检 后，处理器启动流程首先涉及将程序计数器（PC）初始化到一个预设的复位向量地址。对于采用QEMU模拟的RISC-V处理器而言，该**复位向量被配置为 0x1000。**
 在QEMU的RISC-V模拟环境中，复位机制将处理器状态恢复至初始设定，包括但不限于寄存器清零、内存状态重置以及中断禁用等。复位地址 0x1000 是模拟环境中用于引导系统启动的起始代码位置。
